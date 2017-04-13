@@ -23,8 +23,8 @@ test_script:
 
     powershell utils\appveyor\appveyor_test.ps1
 
-notifications:
-- provider: GitHubPullRequest
-  on_build_success: true
-  on_build_failure: true
-  on_build_status_changed: true
+artifacts:
+- path: $(HLSL_BLD_DIR)\testresults.xml
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
